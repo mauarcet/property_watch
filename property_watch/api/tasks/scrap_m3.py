@@ -91,7 +91,11 @@ class ScrapperM3:
                 )
                 try:
                     property.save()
-                    print(f"Property {property_name} added to DB")                
+                    print(f"Property {property_name} added to DB")
+                    PropertyDescription.objects.create(property_id=property, text=property_description)
+                    if property_amenities:
+                        for amenity in property_amenities:
+                            PropertyAmenity.create(property_id=property, name=amenity)
                 except:
                     print("Error: Property not saved ----------------")
                     print(f"{property_name}")
