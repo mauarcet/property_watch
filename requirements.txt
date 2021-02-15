@@ -1,0 +1,5 @@
+djangorestframework 
+Django
+requests
+beautifulsoup4
+black
