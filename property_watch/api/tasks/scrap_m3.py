@@ -72,7 +72,7 @@ class ScrapperM3:
             ).text
             # Create elements in DB
             try:
-                property = Property.objects.get(name=property_name)
+                property = Property.objects.get(image=property_first_image)
             except:
                 property = None
             if property is None:
@@ -92,7 +92,8 @@ class ScrapperM3:
                 try:
                     property.save()
                     print(f"Property {property_name} added to DB")
-                    PropertyDescription.objects.create(property_id=property, text=property_description)
+                    if property_description:
+                        PropertyDescription.objects.create(property_id=property, text=property_description)
                     if property_amenities:
                         for amenity in property_amenities:
                             PropertyAmenity.create(property_id=property, name=amenity)
@@ -104,6 +105,8 @@ class ScrapperM3:
                     print(f"{property_full_address}")
                     print(f"{property_first_image}")
                     print("------------------------------------------")
+            else:
+                print("Skipping, Property already in DB...")
         print("All new properties were added to de the DB")
 
     def run(self):
